@@ -21,6 +21,42 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 
 # In-memory activity database
 activities = {
+    "Basketball": {
+        "description": "Team sport focusing on basketball skills and competitive play",
+        "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM",
+        "max_participants": 15,
+        "participants": ["alex@mergington.edu"]
+        },
+        "Tennis Club": {
+        "description": "Learn tennis techniques and participate in friendly matches",
+        "schedule": "Tuesdays and Thursdays, 3:30 PM - 5:00 PM",
+        "max_participants": 10,
+        "participants": ["james@mergington.edu"]
+        },
+        "Art Club": {
+        "description": "Explore various art forms including painting, drawing, and sculpture",
+        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 16,
+        "participants": ["isabella@mergington.edu", "grace@mergington.edu"]
+        },
+        "Drama Club": {
+        "description": "Perform in theatrical productions and develop acting skills",
+        "schedule": "Mondays and Fridays, 3:30 PM - 5:00 PM",
+        "max_participants": 20,
+        "participants": ["noah@mergington.edu"]
+        },
+        "Debate Team": {
+        "description": "Engage in competitive debate and develop argumentation skills",
+        "schedule": "Thursdays, 3:30 PM - 5:00 PM",
+        "max_participants": 14,
+        "participants": ["ava@mergington.edu", "lucas@mergington.edu"]
+        },
+        "Science Club": {
+        "description": "Conduct experiments and explore scientific concepts",
+        "schedule": "Tuesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 18,
+        "participants": ["henry@mergington.edu"]
+        },
     "Chess Club": {
         "description": "Learn strategies and compete in chess tournaments",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
@@ -61,6 +97,10 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+
+    # Validate student is not already signed up
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student already signed up for this activity")
 
     # Add student
     activity["participants"].append(email)
